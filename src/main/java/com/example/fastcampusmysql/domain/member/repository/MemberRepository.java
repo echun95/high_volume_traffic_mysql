@@ -37,10 +37,6 @@ public class MemberRepository {
     }
 
     public Member save(Member member){
-        /*
-            member id를 보고 갱신 또는 삽입을 정함
-            반환값은 id를 담아서 반환한다.
-         */
         if (member.getId() == null) {
             return insert(member);
         }
@@ -63,7 +59,9 @@ public class MemberRepository {
     }
 
     private Member update(Member member){
-        //TODO: implemented
+        String sql = String.format("UPDATE %s set email = :email, nickname = :nickname, birthday = :birthday WHERE id = :id", TABLE);
+        SqlParameterSource params = new BeanPropertySqlParameterSource(member);
+        namedParameterJdbcTemplate.update(sql, params);
         return member;
     }
 }
