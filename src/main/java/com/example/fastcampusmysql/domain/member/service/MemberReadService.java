@@ -19,23 +19,28 @@ public class MemberReadService {
     private final MemberNicknameRepository memberNicknameRepository;
 
 
-    public MemberDto getMember(Long id){
+    public MemberDto getMember(Long id) {
         Member findMember = memberRepository.findById(id).orElseThrow();
         return toDto(findMember);
     }
 
-    public List<MemberNicknameHistoryDto> getNicknameHistories(Long memberId){
+    public List<MemberNicknameHistoryDto> getNicknameHistories(Long memberId) {
         return memberNicknameRepository.findAllByMemberId(memberId)
                 .stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());
     }
 
-    public MemberDto toDto(Member member){
+    public List<MemberDto> getMembers(List<Long> ids) {
+        List<Member> members = memberRepository.findAllByIdIn(ids);
+        return members.stream().map(this::toDto).toList();
+    }
+
+    public MemberDto toDto(Member member) {
         return new MemberDto(member.getId(), member.getEmail(), member.getNickname(), member.getBirthday());
     }
 
-    private MemberNicknameHistoryDto toDto(MemberNicknameHistory history){
+    private MemberNicknameHistoryDto toDto(MemberNicknameHistory history) {
         return new MemberNicknameHistoryDto(
                 history.getId(),
                 history.getMemberId(),
@@ -43,4 +48,6 @@ public class MemberReadService {
                 history.getCreatedAt()
         );
     }
+
+
 }
