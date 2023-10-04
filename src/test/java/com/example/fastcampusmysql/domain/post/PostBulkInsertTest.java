@@ -22,13 +22,13 @@ public class PostBulkInsertTest {
     @Test
     public void bulkInsert(){
         EasyRandom easyRandom = PostFixureFactory.get(1L,
-                LocalDate.of(2023, 1, 1),
+                LocalDate.of(1970, 1, 1),
                 LocalDate.of(2023, 2, 1));
 
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
         int _1만 = 10000;
-        List<Post> posts = IntStream.range(0, _1만 * 100)
+        List<Post> posts = IntStream.range(0, _1만 * 300)
                 .parallel()
                 .mapToObj(i -> easyRandom.nextObject(Post.class))
                 .toList();
