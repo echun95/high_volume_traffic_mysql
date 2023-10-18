@@ -7,6 +7,7 @@ import com.example.fastcampusmysql.domain.post.service.PostWriteService;
 import com.example.fastcampusmysql.domain.post.service.TimelineWriteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class CreatePostUseCase {
     private final PostWriteService postWriteService;
     private final FollowReadService followReadService;
     private final TimelineWriteService timelineWriteService;
+
 
     public Long execute(PostCommand postCommand){
         Long postId = postWriteService.create(postCommand);

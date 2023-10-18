@@ -16,6 +16,7 @@ public class MemberWriteService {
     private final MemberRepository memberRepository;
     private final MemberNicknameRepository memberNicknameRepository;
 
+    @Transactional
     public Member create(RegisterMemberCommand command){
         Member member = Member.builder()
                 .nickname(command.nickname())
@@ -28,6 +29,7 @@ public class MemberWriteService {
     }
 
 
+    @Transactional
     public void changeNickname(Long memberId, String nickName){
         Member findMember = memberRepository.findById(memberId).orElseThrow();
         findMember.changeNickname(nickName);
